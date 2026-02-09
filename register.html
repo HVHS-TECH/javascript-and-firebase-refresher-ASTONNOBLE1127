@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Register Page Aston Noble</title>
+        <link rel="stylesheet" href="./style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js" integrity="sha512-bzpp8klYroR6PFgL3RJ+VkvY5hJna7Zd38OA56peUDHSNQpSiN9lDQVnMYtcw7hoAVhbR6mAOdH+ymzg1o+G0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/addons/p5.sound.js" integrity="sha512-TU9AWtV5uUZPX8dbBAH8NQF1tSdigPRRT82vllAQ1Ke28puiqLA6ZVKxtUGlgrH6yWFnkKy+sE6luNEGH9ar0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://p5play.org/v3/planck.min.js"></script>
+        <script src="https://p5play.org/v3/p5play.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Bitter&display=swap" rel="stylesheet">
+
+
+        <script type="module" src="./n.mjs"></script>
+    </head>
+    <body>
+        <header></header>
+        <form onsubmit="return false;">
+                    <div class="boxvert">
+                        <div class="boxalign">
+                            <div>
+                                <label>Game Name:</label>      
+                                <input class="infotaker" type="text" id="namebox" value="">
+                            </div>
+                            <div id="wrongname"></div>
+                            <div>
+                                <label>Age:</label>
+                                <input class="infotaker" type="number" id="agebox" min="5" max="130" value="">
+                            </div>
+                            <div id="wrongage"></div>
+                            <div>
+                                <label>Display Name:</label>  
+                                <input class="infotaker" id="userbox" value="">
+                            </div>
+                        
+                            <div>
+                                <label>Email:</label>  
+                                <input class="infotaker" type="email" id="emailbox" value="">
+                            </div>
+                        <div>
+                         <label for="genders">Gender:</label>
+  <select id="genders" name="genders">
+    <option value="">--Select--</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+    <option value="Non-binary">Non-binary</option>
+    <option value="Audi">Audi</option>
+  </select>
+  </div>
+                            <div id="wrongtry"></div>
+                        <button id="subutton1" class="buttons">Submit</button>
+                    </div>
+                    </div>
+                </form>           
+
+        <script type="module" src="./fb/fb_main.mjs">
+
+        </script>
+    </body>
+</html>

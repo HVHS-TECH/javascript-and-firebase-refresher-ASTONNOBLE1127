@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="en">
+   
+    <head>
+  <title>Guess the number!</title>
+    <link rel="icon" href="./images/pen.gif">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter&display=swap" rel="stylesheet">
+    </head>
+    
+    <body onload="gamepagesetup()">
+        <script defer src="./game.js"></script>
+        <div class="aligner">
+            <div class="box">
+                <form onsubmit="return false;">
+                    <div class="boxvert">
+                        <label id="instruct">Enter a number between 1 and (selected difficulty):</label>  
+                        <input class="infotaker" type="number" id="guessbox" value="">
+                        <div id="wrongguess"></div>
+                        <p id="trys">you shouldn't see this</p>
+                        <button id="subutton2">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>

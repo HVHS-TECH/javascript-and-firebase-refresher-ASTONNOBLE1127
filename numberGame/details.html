@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="en">
+   
+    <head>
+  <title>Guess the number!</title>
+    <link rel="icon" href="./images/pen.gif">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter&display=swap" rel="stylesheet">
+    </head>
+    
+    <body>
+        <div class="aligner">
+            <div class="box">
+                <form onsubmit="return false;">
+                    <div class="boxvert">
+                        <div class="boxalign">
+                            <div>
+                                <label>Name:</label>      
+                                <input class="infotaker" type="text" id="namebox" value="">
+                            </div>
+                            <div id="wrongname"></div>
+                            <div>
+                                <label>Age:</label>
+                                <input class="infotaker" type="number" id="agebox" value="">
+                            </div>
+                            <div id="wrongage"></div>
+                            <div>
+                                <label>Tries:</label>  
+                                <input class="infotaker" type="number" id="trybox" value="">
+                            </div>
+                            <div id="wrongtry"></div>
+                        </div>
+                        <button class="infotaker" id="dif">Easy</button>
+                        <button id="subuton1">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script defer src="./details.js"></script>
+    </body>

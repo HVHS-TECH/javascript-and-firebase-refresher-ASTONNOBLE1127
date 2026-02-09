@@ -1,0 +1,300 @@
+/* === GENERAL RESET & BODY === */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #2c1a3a; /* deep plum */
+    font-family: 'Bitter', serif;
+    color: #e6d6f2; /* lavender */
+}
+
+/* === HEADER === */
+header {
+    background-color: #3a254b; /* rich purple */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100vw;
+}
+
+/* === BUTTONS & PROFILE === */
+#buttonSlot {
+    margin: auto 0;
+}
+
+#pfp {
+    border-radius: 50%;
+    width: 5vw;
+}
+
+.admin,.buttons {
+    margin: auto 2vw auto 0;
+    width: 8vw;
+    height: 4vw;
+    font-size: 2vw;
+    background-color: #6c4c93;
+    color: white;
+    border: none;
+    border-radius: 1vw;
+    transition: background-color 0.3s ease;
+}
+
+.admin:hover,.buttons:hover {
+    background-color: #593a82;
+}
+
+/* === DROPDOWN === */
+.dropbtn {
+    background-color: #6c4c93;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin: 0 0.5vw;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.dropbtn:hover,
+.dropbtn:focus {
+    background-color: #593a82;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #4f3c68;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 0 0 8px 8px;
+}
+
+.dropdown-content a {
+    color: #e6d6f2;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {
+    background-color: #3a254b;
+}
+
+.show {
+    display: block;
+}
+
+/* === GAME STUFF === */
+.game, .gameleaderboard {
+    width: 100%;
+    padding: 5%;
+    font-size: 130%;
+    background-color: #4f3c68;
+    color: #e6d6f2;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.game:hover, .gameleaderboard:hover {
+    background-color: #3a254b;
+}
+
+.gameimg {
+    width: 100%;
+    margin: 0 0 -2% 0;
+    background-color: #8854d0; /* bright purple-blue pop */
+}
+
+.gamebox {
+    width: 15vw;
+    margin: 1vw 2.5vw 0;
+    border: none;
+}
+
+.aligner {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#wheel {
+    width: 15vw;
+    height: 15vw;
+    border-radius: 50%;
+}
+
+/* === LAYOUT FLEX ZONE === */
+.holder2 {
+    display: flex;
+    flex-direction: row;
+}
+
+#left, #right {
+    height: 81vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+#left {
+    width: 15vw;
+    border: 0.25vw solid #392a4f;
+    background-color: #3a254b;
+}
+#right {
+    width: 70vw;
+    margin-top: 5vw;
+}
+
+/* === LEADERBOARD ZONE === */
+#center {
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+}
+#center2 {
+    width: 40%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#placement {
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+}
+
+#usersName {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+
+#usersScore {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+}
+
+.leaderitem {
+    border: solid;
+    padding: 0.5vw;
+    background: #5c3e74;
+    border-color: #392a4f;
+    color: #f3eaff;
+}
+
+/* === HOME BUTTON === */
+.home {
+    margin: auto auto auto 0.5vw;
+    height: 5vw;
+    width: 5vw;
+    border-radius: 15%;
+    background-color: #6c4c93;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.home:hover {
+    background-color: #593a82;
+}
+
+/* === POPUP STYLING === */
+.hover_bkgr_fricc {
+    background: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    display: none;
+    height: 100%;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+}
+
+.hover_bkgr_fricc .helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.hover_bkgr_fricc > div {
+    background-color: #3a254b; /* rich purple */
+    box-shadow: 10px 10px 60px #555;
+    display: inline-block;
+    max-width: 551px;
+    min-height: 100px;
+    width: 60%;
+    position: relative;
+    border-radius: 8px;
+    padding: 15px 5%;
+    vertical-align: middle;
+}
+
+.popupCloseButton {
+    background-color: #3a254b; /* rich purple */
+    border: 3px solid #999;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 30px;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.popupCloseButton:hover {
+    background-color: #ccc;
+}
+
+.trigger_popup_fricc {
+    cursor: pointer;
+    font-size: 20px;
+    margin: 20px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.popupwords {
+    font-size: 4vw;
+}
+#wrongtry {
+  border-radius:1vw;
+  background-color: red;
+  padding:0.5vw;
+  font-size: large;
+}
+.boxvert {
+    margin-left: auto;
+    margin-right: auto;
+    width:100%;
+}
+.boxalign {
+    display:flex;
+    margin-top: 5vw;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+input,label,select,option {
+    width:15vw;
+    height:2vw;
+    margin-top: 0.5vw;
+    margin-bottom: 0.5vw;
+    font-size: large;
+}

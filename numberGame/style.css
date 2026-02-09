@@ -1,0 +1,101 @@
+/***** UNIVERSAL *****/
+:root {
+  --box: #AAABBC;
+  --text: #7F6A93;
+  --buttonback: #878E99;
+  --buttontext: #7F6A93;
+}
+.box {
+    background-color:var(--box);
+    width:250px;
+    padding:10px;
+    border-radius:10px;
+    margin-left:auto;
+    margin-right:auto;
+    align-items:center;
+}
+.aligner {
+    justify-content:center;
+    align-content:center;
+    width:100%;
+    height:100vh;
+}
+body {
+    background-image: url("./images/background.gif");
+  background-repeat: no-repeat;
+  background-size:cover;
+  overflow:hidden;
+}
+button {
+    border-radius:3px;
+    color:var(--buttontext);
+    border:none;
+    background-color:var(--buttonback);
+}
+
+/***** HOME PAGE *****/
+#start {
+    width:100%;
+}
+.start {
+    font-size:50px;
+    padding:2px;
+    margin:2px;
+}
+
+/***** DETAILS PAGE *****/
+.infotaker {
+    width:175px;
+    margin:3px;
+}
+#wrongname {
+    border-radius:3px;
+    background-color:#FF7F7F;
+    color:#555555;
+}
+#wrongage {
+    border-radius:3px;
+    background-color:#FF7F7F;
+    color:#555555;
+}
+#wrongtry {
+    border-radius:3px;
+    background-color:#FF7F7F;
+    color:#555555;
+}
+.boxalign {
+    align-items:flex-end;
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    font-family:bitter;
+    color:var(--text);
+}
+.boxvert {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+/***** GAME PAGE *****/
+#wrongguess {
+    border-radius:3px;
+    background-color:#FF7F7F;
+    color:#555555;
+}
+#instruct {
+    text-align:center;
+}
+
+/***** END PAGE *****/
+#winner {
+    text-align:center;
+    width:100%;
+    color:#24777E;
+    font-family:sans-serif;
+}
+.endoptions {
+    margin-right:auto;
+    margin-left:auto;
+    width:49%;
+}
