@@ -263,10 +263,37 @@ async function  fb_read(what, where) {
 
 async function fb_write(where2, where, what) {
     console.log('%c fb_write(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+        fb_log(where2, where, what)
     return await update(ref(getDatabase(), where + where2 + "/"), what).then((snapshot) => {
         return snapshot
     }).catch((error) => {
         console.error("❌write error: " + error)
+        alert("❌write error: " + error)
+        return error
+    });
+}
+
+/***********************************************************/
+//fb_log()
+//
+//takes inputs and writes to the database
+//input
+//where, path
+//where2, path addon (if nessessary)
+//what, what its writing
+//
+//output,true
+/***********************************************************/
+
+async function fb_log(where2, where, what) {
+    console.log('%c fb_log(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    console.log(userDetails)
+    const d = new Date();
+    const time = d.getFullYear()+","+(d.getMonth()+1)+","+d.getDate()+","+d.getHours()+","+d.getMinutes()+","+d.getSeconds()+","+d.getMilliseconds()
+    return await update(ref(getDatabase(), "log/" + JSON.parse(localStorage.getItem("userDetails")).uid + "/"+time+"/"+where+where2+"/"), what).then((snapshot) => {
+        return snapshot
+    }).catch((error) => {
+        console.error("❌write error: " + error)    
         alert("❌write error: " + error)
         return error
     });
