@@ -290,7 +290,7 @@ async function fb_log(where2, where, what) {
     console.log(userDetails)
     const d = new Date();
     const time = d.getFullYear()+","+(d.getMonth()+1)+","+d.getDate()+","+d.getHours()+","+d.getMinutes()+","+d.getSeconds()+","+d.getMilliseconds()
-    return await update(ref(getDatabase(), "log/" + JSON.parse(localStorage.getItem("userDetails")).uid + "/"+time+"/"+where+where2+"/"), what).then((snapshot) => {
+    return await update(ref(getDatabase(), "log/" + JSON.parse(localStorage.getItem("userDetails")).uid + "/"+time+"/"), what).then((snapshot) => {
         return snapshot
     }).catch((error) => {
         console.error("❌write error: " + error)    
