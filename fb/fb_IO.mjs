@@ -42,7 +42,9 @@ import {
     update,
     query,
     orderByChild,
-    limitToFirst
+    orderByKey,
+    limitToFirst,
+    onValue
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 import {
     getAuth,
@@ -72,6 +74,7 @@ window.magic = magic
 window.updateScore = updateScore
 window.account =account
 window.leaderload = leaderload
+window.leaderload1 = leaderload1
 window.pageDirect = pageDirect
 window.leaderBoard = leaderBoard
 window.wheelUpdate = wheelUpdate
@@ -83,6 +86,9 @@ window.wheelUpdate = wheelUpdate
 
 if (document.getElementById("subutton1")) {
     document.getElementById("subutton1").addEventListener("click", formSub);
+}
+if (document.getElementById("textSend")) {
+    document.getElementById("textSend").addEventListener("click", textSend);
 }
 if (document.getElementById("popbut")) {
     popbut1.addEventListener("click", accountButton);
@@ -114,6 +120,7 @@ function fb_initialise() {
     const FB_GAMEAPP = initializeApp(FB_GAMECONFIG);
     const FB_GAMEDB = getDatabase(FB_GAMEAPP);
     console.info(FB_GAMEDB);
+    fb_moniter()
 }
 
 /***********************************************************/
@@ -237,6 +244,7 @@ async function googleAuthenticate() {
 
 async function  fb_read(what, where) {
     console.log('%c  fb_read(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    console.log(where + what)
     return await get(ref(getDatabase(), where + what)).then((snapshot) => {
         if (snapshot.val() == null) {
             console.warn("doesn't exist")
@@ -276,7 +284,7 @@ async function fb_write(where2, where, what) {
 /***********************************************************/
 //fb_log()
 //
-//takes inputs and writes to the database
+//takes writes and logs to the database
 //input
 //where, path
 //where2, path addon (if nessessary)
@@ -289,13 +297,45 @@ async function fb_log(where2, where, what) {
     console.log('%c fb_log(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     console.log(userDetails)
     const d = new Date();
-    const time = d.getFullYear()+","+(d.getMonth()+1)+","+d.getDate()+","+d.getHours()+","+d.getMinutes()+","+d.getSeconds()+","+d.getMilliseconds()
+    const time = d.getFullYear()+","+(d.getMonth()+1)+","+d.getDate()+","+d.getHours()+","+d.getMinutes()+","+d.getSeconds()
     return await update(ref(getDatabase(), "log/" + JSON.parse(localStorage.getItem("userDetails")).uid + "/"+time+"/"), what).then((snapshot) => {
         return snapshot
     }).catch((error) => {
         console.error("❌write error: " + error)    
         alert("❌write error: " + error)
         return error
+    });
+}
+
+/***********************************************************/
+//fb_moniter()
+//
+//takes inputs and writes to the database
+//input
+//where, path
+//where2, path addon (if nessessary)
+//what, what its writing
+//
+//output,true
+/***********************************************************/
+
+function fb_moniter() {
+    onValue(ref(getDatabase(),"chat/"), (snapshot) => {
+
+        var fb_data = snapshot.val();
+
+        if (fb_data != null) {
+
+            if(document.URL.includes("chatroom.html")) {
+                fb_sortedRead_chat()
+            }
+
+        } else {
+
+           console.log("✅ Code for no record found goes here")
+
+        }
+
     });
 }
 
@@ -581,6 +621,69 @@ async function fb_sortedRead(locate) {
         }
     });
 }
+       
+/***********************************************************/
+//fb_sortedRead_chat()
+//
+//makes the leaderboard
+//input
+//locate, the path of the scores
+/***********************************************************/
+
+async function fb_sortedRead_chat() {
+    let timmy = document.getElementsByClassName('leaderitem')
+    for(let i=timmy.length;i>0;i--){
+        console.log(timmy)
+        await timmy[i-1].remove()}
+    const dbReference = query(ref(getDatabase(),"/chat"), orderByKey(), limitToFirst(100));
+    const Snapshot = await get(dbReference)
+        let objs = []
+        console.log(objs)
+        Snapshot.forEach((userScoreSnapshot) => {
+            //let temp = JSON.stringify(Object.values(userScoreSnapshot.val()))
+            //console.log(userScoreSnapshot.val())
+            //console.log(Object.values(userScoreSnapshot.val()))
+            //console.log(temp)
+            objs.push(userScoreSnapshot.val())
+        });
+        console.log(objs)
+        //console.log(JSON.stringify(objs))
+        objs = objs.reverse()
+        for (let i = 0; i < objs.length; i++) {
+            //let place = document.createElement('label')
+            let key = document.createElement('label')
+            let value = document.createElement('label')
+            //place.textContent = ((i + 1) + ": ")
+            let displayedname = await fb_read(objs[i].uid+"/username","users/")
+            key.textContent = displayedname + ": "
+            console.log(fb_read(objs[i].uid+"/username","users/"))
+            value.textContent = objs[i].message
+            //place.setAttribute('class','leaderitem')
+            key.setAttribute('class','leaderitem')
+            value.setAttribute('class','leaderitem')
+            //document.getElementById("placement").appendChild(place)
+            document.getElementById("usersName").appendChild(key)
+            document.getElementById("usersScore").appendChild(value)
+        }
+    
+}
+
+/***********************************************************/
+//textSend()
+//
+//sets leaderboard to specific one
+/***********************************************************/
+
+function textSend() {
+    //let message = document.getElementById("textInput").value
+    //let uid = localStorage.getItem("userDetails").uid
+    let timestamp = Date.now()
+    let temp = {}
+    temp.uid = JSON.parse(localStorage.getItem("userDetails")).uid
+    temp.message = document.getElementById("textInput").value
+    fb_write(timestamp,"/chat/",temp)
+    //fb_write("","/chat/",JSON.parse("{'"+timestamp + "':{'message':'"+message+"'},{'uid':'"+uid+"'}}"))
+}
 
 /***********************************************************/
 //leaderload()
@@ -594,6 +697,17 @@ async function leaderload() {
     leaderSide(path)
 }
 
+/***********************************************************/
+//leaderload1()
+//
+//sets leaderboard to specific one
+/***********************************************************/
+
+async function leaderload1() {
+    let path = await localStorage.getItem("leaderpath")
+    //fb_sortedRead_chat()
+    leaderSide(path)
+}
 /***********************************************************/
 //leaderBoard()
 //

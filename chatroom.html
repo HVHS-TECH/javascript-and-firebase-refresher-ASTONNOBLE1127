@@ -3,6 +3,9 @@
     <head>
         <title>Home Page Aston Noble</title>
         <link rel="stylesheet" href="./style.css">
+        <style>html,body {
+          overflow:hidden;
+        }</style>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/p5.js" integrity="sha512-bzpp8klYroR6PFgL3RJ+VkvY5hJna7Zd38OA56peUDHSNQpSiN9lDQVnMYtcw7hoAVhbR6mAOdH+ymzg1o+G0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.8.0/addons/p5.sound.js" integrity="sha512-TU9AWtV5uUZPX8dbBAH8NQF1tSdigPRRT82vllAQ1Ke28puiqLA6ZVKxtUGlgrH6yWFnkKy+sE6luNEGH9ar0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script src="https://p5play.org/v3/planck.min.js"></script>
@@ -12,42 +15,21 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script type="module" src="./fb/fb_main.mjs"></script>
     </head>
-    <body>
-        <header id="header">      
-        </header>
-        <div class="aligner">
-          <div class="gamebox">
-            <img class="gameimg" src="./DD_title.png">
-            <button class="game" onclick="play('./DD_game.html')">Play</button>
-            <button class="gameleaderboard" onclick="leaderBoard('DD_scores')">Leaderboard</button>
-          </div>
-          <div class="gamebox">
-            <img class="gameimg" src="./wheel.jpeg">
-            <button class="game" onclick="play('./wheel_game.html')">Play</button>
-            <button class="gameleaderboard" onclick="leaderBoard('Wh_scores')">Leaderboard</button>
-          </div>
-          <div class="gamebox">
-            <img class="gameimg" src="./unnamed.png">
-            <button class="game" onclick="play('./numberGame/index.html')">Play</button>
-          </div>
+    <body onload="leaderload1()">
+        <header id="header">    
+  </header>
+  <div class="holder2">
+<div id="left"></div>
+<div id="right">
+        <div id="scroll-box">
+        <div id="usersName"></div>
+        <div id="usersScore"></div>
         </div>
-<div class="hover_bkgr_fricc">
-    <span class="helper"></span>
-    <div>
-        <div class="popupCloseButton">&times;</div>
-        <p class="popupwords">Please login or register to play games.<br /></p>
-        <button id="popbut" class="buttons">Login</button><button class="buttons" id="popbut1">Register</button>
-    </div>
-</div>
-<script>
-    $('.hover_bkgr_fricc').click(function(){
-        $('.hover_bkgr_fricc').hide();
-    });
-    $('.popupCloseButton').click(function(){
-        $('.hover_bkgr_fricc').hide();
-    });
+        <div id="center"><input id="textInput"><button id="textSend">chez</button></div>
+        </div>
+      </div>
+    
+        <script type="module" src="./fb/fb_main.mjs"></script>
 
-
-</script>
     </body>
 </html>
