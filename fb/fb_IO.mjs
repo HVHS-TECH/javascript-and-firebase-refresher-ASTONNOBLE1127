@@ -74,7 +74,6 @@ window.magic = magic
 window.updateScore = updateScore
 window.account =account
 window.leaderload = leaderload
-window.leaderload1 = leaderload1
 window.pageDirect = pageDirect
 window.leaderBoard = leaderBoard
 window.wheelUpdate = wheelUpdate
@@ -697,17 +696,6 @@ async function leaderload() {
     leaderSide(path)
 }
 
-/***********************************************************/
-//leaderload1()
-//
-//sets leaderboard to specific one
-/***********************************************************/
-
-async function leaderload1() {
-    let path = await localStorage.getItem("leaderpath")
-    //fb_sortedRead_chat()
-    leaderSide(path)
-}
 /***********************************************************/
 //leaderBoard()
 //

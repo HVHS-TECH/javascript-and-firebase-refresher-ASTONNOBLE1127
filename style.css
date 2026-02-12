@@ -163,7 +163,7 @@ header {
     display: flex;
     flex-direction: row;
     margin: 0 auto;
-height: 150px;
+height: 40vh;
     overflow-y: auto;        /* Enable vertical scrolling */
     overflow-x: hidden;      /* Disable horizontal scrolling */
 padding: 10px;
