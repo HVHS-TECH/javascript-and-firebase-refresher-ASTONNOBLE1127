@@ -30,6 +30,7 @@ export {reg_submit,reg_load}
 function reg_load() {
     console.log('%c reg_load()','color: white; background-color: yellow;');
     let userDetails = JSON.parse(localStorage.getItem("userDetail"))
+    console.log(userDetails)
     emailbox.setAttribute("value", userDetails.email)
     emailbox.setAttribute("disabled", true)
     userbox.setAttribute("value", userDetails.displayName)
