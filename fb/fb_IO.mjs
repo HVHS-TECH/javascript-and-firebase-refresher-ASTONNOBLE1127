@@ -44,6 +44,7 @@ import {
     orderByChild,
     orderByKey,
     limitToFirst,
+    limitToLast,
     onValue
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 import {
@@ -634,7 +635,7 @@ async function fb_sortedRead_chat() {
     for(let i=timmy.length;i>0;i--){
         console.log(timmy)
         await timmy[i-1].remove()}
-    const dbReference = query(ref(getDatabase(),"/chat"), orderByKey(), limitToFirst(100));
+    const dbReference = query(ref(getDatabase(),"/chat"), orderByKey(), limitToLast(100));
     const Snapshot = await get(dbReference)
         let objs = []
         console.log(objs)
