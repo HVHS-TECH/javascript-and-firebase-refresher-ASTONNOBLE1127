@@ -32,7 +32,7 @@ window.addEventListener('DOMContentLoaded', () => {
     fb_initialise();
     pageChange()
     header()
-    if (window.location.pathname == "/register.html") {reg_load();
+    if (document.URL.includes("/register.html")) {reg_load();
     }
     if (JSON.parse(localStorage.getItem("userDetails")) != (undefined || null)) {
         let userDetails = JSON.parse(localStorage.getItem("userDetails"));
