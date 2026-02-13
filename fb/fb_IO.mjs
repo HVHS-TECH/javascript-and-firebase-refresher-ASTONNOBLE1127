@@ -219,7 +219,7 @@ async function googleAuthenticate() {
         if (result1 == null) {
             localStorage.setItem("userDetail", JSON.stringify(userDetails));
             console.warn("account doesn't exist")
-            pageDirect("./register.html")
+            //pageDirect("./register.html")
         } else {
             localStorage.setItem("userDetails", JSON.stringify(userDetails));
             pageDirect("./index.html")
