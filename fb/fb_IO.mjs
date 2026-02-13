@@ -170,6 +170,9 @@ function formSub() {
         } else if (document.URL.includes("/account.html")) {
             if (!isNaN(document.getElementsByName('age')[0].value) && (document.getElementsByName('username')[0].value != '') && (document.getElementsByName('gender')[0].value != '') && (Number(document.getElementsByName('age')[0].value) > 0) && (Number(document.getElementsByName('age')[0].value) <= 130)) {
                 const userDetails = JSON.parse(localStorage.getItem("userDetails"));
+                console.log(document.getElementsByName('username')[0].value)
+                let temp = JSON.parse('{"' + userDetails.uid + '":"' + document.getElementsByName('username')[0].value + '"}')
+                fb_write("","/uidVault/",temp)
                 for (let i = 0; i < accountKeysLength; i++) {
                     let fieldValue = document.getElementById(i + 150).value
                     document.getElementById(i + 150).style.backgroundColor = 'lime'
@@ -180,6 +183,7 @@ function formSub() {
                     } else {
                         val = JSON.parse('{"' + val2 + '":"' + fieldValue + '"}')
                     }
+                    
                     fb_write(userDetails.uid,'/users/',val)
                 }
             } else {
@@ -633,10 +637,14 @@ async function fb_sortedRead(locate) {
 /***********************************************************/
 
 async function fb_sortedRead_chat() {
-    let timmy = document.getElementsByClassName('leaderitem')
-    for(let i=timmy.length;i>0;i--){
-        console.log(timmy)
-        await timmy[i-1].remove()}
+    const uids = await fb_read("","uidVault")
+    console.log(uids)
+    document.getElementById("usersScore").innerHTML=""
+    document.getElementById("usersName").innerHTML=""
+    //let timmy = document.getElementsByClassName('leaderitem')
+    //for(let i=timmy.length;i>0;i--){
+        //console.log(timmy)
+        //ait timmy[i-1].remove()}
     const dbReference = query(ref(getDatabase(),"/chat"), orderByKey(), limitToLast(100));
     const Snapshot = await get(dbReference)
         let objs = []
@@ -656,9 +664,10 @@ async function fb_sortedRead_chat() {
             let key = document.createElement('label')
             let value = document.createElement('label')
             //place.textContent = ((i + 1) + ": ")
-            let displayedname = await fb_read(objs[i].uid+"/username","users/")
+            let displayedname = uids[objs[i].uid] ?? "Unknown user";  //this is useful as firebase files may get deleted in development
+            //await fb_read(objs[i].uid+"/username","users/")
             key.textContent = displayedname + ": "
-            console.log(fb_read(objs[i].uid+"/username","users/"))
+            //console.log(fb_read(objs[i].uid+"/username","users/"))
             value.textContent = objs[i].message
             //place.setAttribute('class','leaderitem')
             key.setAttribute('class','leaderitem')

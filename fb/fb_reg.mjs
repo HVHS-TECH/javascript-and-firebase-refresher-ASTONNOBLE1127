@@ -52,6 +52,7 @@ async function reg_submit() {
         userDetails.age = Number(document.getElementById("agebox").value)
         userDetails.gender = document.getElementById("genders").value
         localStorage.setItem("userDetails", JSON.stringify(userDetails));
+        const publicDisplayName = await fb_write(userDetails.uid,"/uidVault/",userDetails.username)
         const result = await fb_write(userDetails.uid, "/users/", userDetails)
         pageDirect("./index.html")
         
