@@ -271,7 +271,9 @@ async function  fb_read(what, where) {
 
 async function fb_write(where2, where, what) {
     console.log('%c fb_write(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    if (where != "/chat/") {
         fb_log(where2, where, what)
+    }
     return await update(ref(getDatabase(), where + where2 + "/"), what).then((snapshot) => {
         return snapshot
     }).catch((error) => {
@@ -681,7 +683,12 @@ function textSend() {
     let temp = {}
     temp.uid = JSON.parse(localStorage.getItem("userDetails")).uid
     temp.message = document.getElementById("textInput").value
-    fb_write(timestamp,"/chat/",temp)
+    if (temp.message.length < 100 && temp.message.replace(/\s+/g, "").length > 0) {
+        document.getElementById("textInput").value = ""
+        fb_write(timestamp,"/chat/",temp)
+    } else {
+        alert("messages must be under 100 charachters & not empty")
+    }
     //fb_write("","/chat/",JSON.parse("{'"+timestamp + "':{'message':'"+message+"'},{'uid':'"+uid+"'}}"))
 }
 
