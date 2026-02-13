@@ -144,10 +144,10 @@ function pageDirect(dest) {
 
 function formSub() {
     console.log('%c formSub()', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    if (window.location.pathname == '/register.html') {
+    if (document.URL.includes('/register.html')) {
         reg_submit()
     } else {
-        if (window.location.pathname == '/admin.html') {
+        if (document.URL.includes('/admin.html')) {
             for (let m = adminLoopTrack; globalLoopTrack > m; m++) {
                 let fieldValue = document.getElementById(m + 100).value
                 document.getElementById(m + 100).setAttribute('value',fieldValue)
@@ -166,7 +166,7 @@ function formSub() {
                 let writeLocation = document.getElementById(m).getAttribute('class')
                 fb_write('',writeLocation,val)
             }
-        } else if (window.location.pathname == "/account.html") {
+        } else if (document.URL.includes("/account.html")) {
             if (!isNaN(document.getElementsByName('age')[0].value) && (document.getElementsByName('username')[0].value != '') && (document.getElementsByName('gender')[0].value != '') && (Number(document.getElementsByName('age')[0].value) > 0) && (Number(document.getElementsByName('age')[0].value) <= 130)) {
                 const userDetails = JSON.parse(localStorage.getItem("userDetails"));
                 for (let i = 0; i < accountKeysLength; i++) {
