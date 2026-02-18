@@ -542,7 +542,7 @@ async function updateScore(stars,level) {
         scoreTotal[I] = Number(scoreTotal[I])
     }
     let user = await  fb_read(userDetails.uid,"/users/")    
-    let tom = JSON.parse(('{"name":"'+user.username+'"}'))     
+    let tom = JSON.parse(('{"uid":"'+userDetails.uid+'"}'))     
     fb_write("","/scores/DD_scores/" + userDetails.uid + "/",tom)
 }
 
@@ -604,6 +604,7 @@ async function account() {
 /***********************************************************/
 
 async function fb_sortedRead(locate) {
+    const uids = await fb_read("","uidVault")
     const dbReference = query(ref(getDatabase(),locate), orderByChild("highScore"), limitToFirst(3));
     get(dbReference).then((Snapshot) => {
         let objs = []
@@ -616,7 +617,8 @@ async function fb_sortedRead(locate) {
             let key = document.createElement('label')
             let value = document.createElement('label')
             place.textContent = ((i + 1) + ": ")
-            key.textContent = objs[i].name + ": "
+            let displayedname = uids[objs[i].uid] ?? "Unknown user";  //this is useful as firebase files may get deleted in development
+            key.textContent = displayedname + ": "
             value.textContent = objs[i].highScore
             place.setAttribute('class','leaderitem')
             key.setAttribute('class','leaderitem')
@@ -743,7 +745,7 @@ async function wheelUpdate(WhScore) {
         fb_write("","/scores/Wh_scores/" + userDetails.uid + "/",subscore)
     
     let user = await  fb_read(userDetails.uid,"/users/")    
-    let tom = JSON.parse(('{"name":"'+user.username+'"}'))     
+    let tom = JSON.parse(('{"uid":"'+userDetails.uid+'"}'))     
     fb_write("","/scores/Wh_scores/" + userDetails.uid + "/",tom)
     }
 }
