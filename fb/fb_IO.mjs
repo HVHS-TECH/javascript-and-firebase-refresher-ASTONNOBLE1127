@@ -90,6 +90,9 @@ if (document.getElementById("subutton1")) {
 if (document.getElementById("textSend")) {
     document.getElementById("textSend").addEventListener("click", textSend);
 }
+if (document.getElementById("join")) {
+    document.getElementById("join").addEventListener("click", joinGame);
+}
 if (document.getElementById("popbut")) {
     popbut1.addEventListener("click", accountButton);
     popbut.addEventListener("click", accountButton);
@@ -771,4 +774,31 @@ async function leaderSide(path) {
             }
             document.getElementById("left").appendChild(value)
     }
+}
+
+/***********************************************************/
+//joinGame()
+//
+//sidebar for leaderboard
+//input
+//path, current leaderboard
+/***********************************************************/
+
+async function joinGame() {
+    let userDetails = JSON.parse(localStorage.getItem("userDetails"));
+    let temp = JSON.parse('{"'+userDetails.uid+'":{"player1":"'+userDetails.uid+'"}}')
+    fb_write("","/lobbies/",temp)
+}
+
+/***********************************************************/
+//joinGame()
+//
+//sidebar for leaderboard
+//input
+//path, current leaderboard
+/***********************************************************/
+
+async function lobbyLoad() {
+    let lobbies = await fb_read("","/lobbies/")
+    let keys = Object.keys(lobbies)
 }
