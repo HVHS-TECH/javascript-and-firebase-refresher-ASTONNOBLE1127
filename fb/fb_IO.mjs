@@ -78,6 +78,10 @@ window.leaderload = leaderload
 window.pageDirect = pageDirect
 window.leaderBoard = leaderBoard
 window.wheelUpdate = wheelUpdate
+window.lobbyLoad = lobbyLoad
+window.joinLobby = joinLobby    
+window.lobbyGameLoad = lobbyGameLoad
+window.gcd = gcd
 
 
 /***********************************************************/
@@ -791,7 +795,7 @@ async function joinGame() {
 }
 
 /***********************************************************/
-//joinGame()
+//lobbyLoad()
 //
 //sidebar for leaderboard
 //input
@@ -799,6 +803,91 @@ async function joinGame() {
 /***********************************************************/
 
 async function lobbyLoad() {
-    let lobbies = await fb_read("","/lobbies/")
-    let keys = Object.keys(lobbies)
+    let userDetails = JSON.parse(localStorage.getItem("userDetails"));
+    let userlobbies = await fb_read(userDetails.uid+"/lobby","/users/")
+    console.log(userlobbies)
+    if (userlobbies == null) {
+        let lobbies = await fb_read("","/lobbies/")
+        let keys = Object.keys(lobbies)
+        for (let i = 0; i < keys.length; i++) {
+            let value = document.createElement('p')
+            value.textContent = keys[i]
+            value.setAttribute('onclick',"joinLobby('" + keys[i] + "')")
+            value.style.textAlign="center"
+            document.getElementById("lobby").appendChild(value)
+        }
+    } else {
+        window.location.href = "./numbergameplay.html"
+    }
+}
+
+/***********************************************************/
+//lobbyGameLoad()
+//
+//sidebar for leaderboard
+//input
+//path, current leaderboard
+/***********************************************************/
+
+async function lobbyGameLoad() {
+    let userDetails = JSON.parse(localStorage.getItem("userDetails"));
+    let lobby = await fb_read(userDetails.uid+"/lobby","/users/")
+    console.log(lobby)
+    
+}
+
+/***********************************************************/
+//joinLobby()
+//
+//joins the lobby
+//input
+//lobby, the lobby to join
+/***********************************************************/
+
+async function joinLobby(lobby) {
+    let userDetails = JSON.parse(localStorage.getItem("userDetails"));
+    if(lobby != userDetails.uid) {
+        let temp = JSON.parse('{"player2":"'+userDetails.uid+'"}')
+        fb_write("","/lobbies/"+lobby+"/",temp)
+        let temp2 = JSON.parse('{"lobby":"'+lobby+'"}')
+        fb_write("","/users/"+userDetails.uid+"/",temp2)
+    }
+}
+
+/***********************************************************/
+//gcd(a,b)
+//
+//litterally just the output for the gcdworker
+//input
+//a, first number
+//b, second number
+/***********************************************************/
+
+async function gcd(a,b) {
+    let result = await gcdworker(a,b)
+    console.log("the gcd of " + a + " and " + b + " is " + result)
+    
+}
+
+/***********************************************************/
+//gcdworker(a,b)
+//
+//finds the greatest common divisor of two numbers
+//input
+//a, first number
+//b, second number
+/***********************************************************/
+
+async function gcdworker(a,b) {
+    if ((a == 0) || (b == 0)) {
+        return "gcd is not defined for 0"
+    } else {
+        let temp = Math.floor(a/b)
+        let rem = a%b
+        if (rem == 0) {
+            return b
+        } else {
+            return await gcdworker(b,rem)
+        }
+    }
 }
