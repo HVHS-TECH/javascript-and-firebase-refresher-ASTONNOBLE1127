@@ -883,7 +883,7 @@ async function gcdworker(a,b) {
         return "gcd is not defined for 0"
     } else {
         let temp = Math.floor(a/b)
-        let rem = a%b
+        let rem = a%b //was going to add a flip function but this is more efficient as it will auto flip when a is smaller than b
         if (rem == 0) {
             return b
         } else {
