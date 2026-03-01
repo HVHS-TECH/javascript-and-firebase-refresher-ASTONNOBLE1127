@@ -876,12 +876,20 @@ async function lobbyGameLoad() {
 
 async function joinLobby(lobby) {
     let userDetails = JSON.parse(localStorage.getItem("userDetails"));
-    if(lobby != userDetails.uid) {
-        let temp = JSON.parse('{"player2":"'+userDetails.uid+'"}')
-        await fb_write("","/lobbies/"+lobby+"/",temp)
-        let temp2 = JSON.parse('{"lobby":"'+lobby+'"}')
-        await fb_write("","/users/"+userDetails.uid+"/",temp2)
-        window.location.href = "./numbergameplay.html"
+    let p2 = await fb_read("player2","/lobbies/"+lobby+"/")
+    if (p2 != null) {
+        alert("lobby is full")
+    } else {
+        if(lobby != userDetails.uid) {
+            let temp = JSON.parse('{"player2":"'+userDetails.uid+'"}')
+            await fb_write("","/lobbies/"+lobby+"/",temp)
+            let temp2 = JSON.parse('{"lobby":"'+lobby+'"}')
+            await fb_write("","/users/"+userDetails.uid+"/",temp2)
+            window.location.href = "./numbergameplay.html"
+        } else {
+            alert("you cannot join your own lobby")
+            console.log("you shouldn't even be seeing this if my code is working right")
+        }
     }
 }
 
