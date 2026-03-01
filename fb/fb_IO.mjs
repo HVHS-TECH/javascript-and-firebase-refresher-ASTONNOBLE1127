@@ -933,10 +933,12 @@ async function leaveGame() {
     let userDetails = JSON.parse(localStorage.getItem("userDetails"));
     let lobby = await fb_read(userDetails.uid+"/lobby","/users/")
     if (await fb_read(lobby+"/player1","/lobbies/") == userDetails.uid) {
-        fb_remove("/lobbies/"+lobby)
-        fb_remove("/users/"+userDetails.uid+"/lobby")
+        await fb_remove("/lobbies/"+lobby)
+        await fb_remove("/users/"+userDetails.uid+"/lobby")
+        window.location.href = "./numbergame2.html"
     } else {
-        fb_remove("/lobbies/"+lobby+"/player2")
-        fb_remove("/users/"+userDetails.uid+"/lobby")
+        await fb_remove("/lobbies/"+lobby+"/player2")
+        await fb_remove("/users/"+userDetails.uid+"/lobby")
+        window.location.href = "./numbergame2.html"
     }
 }
