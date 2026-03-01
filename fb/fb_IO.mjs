@@ -45,7 +45,8 @@ import {
     orderByKey,
     limitToFirst,
     limitToLast,
-    onValue
+    onValue,
+    remove
 } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 import {
     getAuth,
@@ -96,6 +97,9 @@ if (document.getElementById("textSend")) {
 }
 if (document.getElementById("join")) {
     document.getElementById("join").addEventListener("click", joinGame);
+}
+if (document.getElementById("leave")) {
+    document.getElementById("leave").addEventListener("click", leaveGame);
 }
 if (document.getElementById("popbut")) {
     popbut1.addEventListener("click", accountButton);
@@ -291,6 +295,25 @@ async function fb_write(where2, where, what) {
         console.error("❌write error: " + error)
         alert("❌write error: " + error)
         return error
+    });
+}
+
+/***********************************************************/
+//fb_remove()
+//
+//takes inputs and removes from the database
+//input
+//what, path
+//
+/***********************************************************/
+
+async function fb_remove(what) {
+    console.log('%c fb_remove(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    return await remove(ref(getDatabase(), what)).then((snapshot) => {
+        return snapshot
+    }).catch((error) => {
+        console.error("❌remove error: " + error)
+        alert("❌remove error: " + error)
     });
 }
 
@@ -790,8 +813,15 @@ async function leaderSide(path) {
 
 async function joinGame() {
     let userDetails = JSON.parse(localStorage.getItem("userDetails"));
-    let temp = JSON.parse('{"'+userDetails.uid+'":{"player1":"'+userDetails.uid+'"}}')
-    fb_write("","/lobbies/",temp)
+    if (await fb_read(userDetails.uid+"/lobby","/users/") == null) {
+        let temp = JSON.parse('{"'+userDetails.uid+'":{"player1":"'+userDetails.uid+'"}}')
+        await fb_write("","/lobbies/",temp)
+        let temp2 = JSON.parse('{"lobby":"'+userDetails.uid+'"}')
+        await fb_write("","/users/"+userDetails.uid+"/",temp2)
+        window.location.href = "./numbergameplay.html"
+    } else {
+        alert("you are already in a lobby")
+    }
 }
 
 /***********************************************************/
@@ -848,9 +878,10 @@ async function joinLobby(lobby) {
     let userDetails = JSON.parse(localStorage.getItem("userDetails"));
     if(lobby != userDetails.uid) {
         let temp = JSON.parse('{"player2":"'+userDetails.uid+'"}')
-        fb_write("","/lobbies/"+lobby+"/",temp)
+        await fb_write("","/lobbies/"+lobby+"/",temp)
         let temp2 = JSON.parse('{"lobby":"'+lobby+'"}')
-        fb_write("","/users/"+userDetails.uid+"/",temp2)
+        await fb_write("","/users/"+userDetails.uid+"/",temp2)
+        window.location.href = "./numbergameplay.html"
     }
 }
 
@@ -889,5 +920,23 @@ async function gcdworker(a,b) {
         } else {
             return await gcdworker(b,rem)
         }
+    }
+}
+
+/***********************************************************/
+//leaveGame()
+//
+//leaves the lobby
+/***********************************************************/
+
+async function leaveGame() {
+    let userDetails = JSON.parse(localStorage.getItem("userDetails"));
+    let lobby = await fb_read(userDetails.uid+"/lobby","/users/")
+    if (await fb_read(lobby+"/player1","/lobbies/") == userDetails.uid) {
+        fb_remove("/lobbies/"+lobby)
+        fb_remove("/users/"+userDetails.uid+"/lobby")
+    } else {
+        fb_remove("/lobbies/"+lobby+"/player2")
+        fb_remove("/users/"+userDetails.uid+"/lobby")
     }
 }
