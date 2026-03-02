@@ -16,29 +16,29 @@ console.log("%c gameUni.js", "color: blue; background-color: white;");
 /******************************************************/
 
 function preload() {
-    playerSheet = loadImage('./images/questKid.webp');
-    wolfSheet = loadImage('./images/enemy/MassacreSpriteSheet.png');
-    archerSheet = loadImage('./images/enemy/archer.png');
-    arrowSheet = loadImage('./images/enemy/arrow.png');
-    tiles = loadImage('./images/DungeonTileSet.png')
-    heart = loadImage('./images/icons/heart.png')
-    keyboard = loadImage('./images/uninteractables/keybinds.png')
-    endScreen = loadImage('./images/uninteractables/end2.png')
-    menu = loadImage('./images/buttons/menu.png')
-    restart = loadImage('./images/buttons/restart.png')
-    letter = loadImage('./images/uninteractables/lettersheet2.png')
-    starImg = loadImage('./images/icons/star3.png')
-    startImage = loadImage('./images/buttons/start.png')
-    tutorialImage = loadImage('./images/buttons/tutorial.png')
-    ttasr = loadImage('./images/buttons/ttasr.png')
-    golemSheet = loadImage('./images/enemy/golem.png')
-    lock = loadImage('./images/icons/lock.png')
-    levelImg = loadImage('./images/icons/levels.png')
-    planeImg = loadImage('./images/plane/ships_packed.png')
-    planeTiles = loadImage('./images/plane/tiles_packed.png')
-    heartRelic = loadImage('./images/relics/heartRelic.png')
-    backImg = loadImage('./images/buttons/back.png')
-    titleImg = loadImage('./images/title.png')
+    playerSheet = loadImage('../images/questKid.webp');
+    wolfSheet = loadImage('../images/enemy/MassacreSpriteSheet.png');
+    archerSheet = loadImage('../images/enemy/archer.png');
+    arrowSheet = loadImage('../images/enemy/arrow.png');
+    tiles = loadImage('../images/DungeonTileSet.png')
+    heart = loadImage('../images/icons/heart.png')
+    keyboard = loadImage('../images/uninteractables/keybinds.png')
+    endScreen = loadImage('../images/uninteractables/end2.png')
+    menu = loadImage('../images/buttons/menu.png')
+    restart = loadImage('../images/buttons/restart.png')
+    letter = loadImage('../images/uninteractables/lettersheet2.png')
+    starImg = loadImage('../images/icons/star3.png')
+    startImage = loadImage('../images/buttons/start.png')
+    tutorialImage = loadImage('../images/buttons/tutorial.png')
+    ttasr = loadImage('../images/buttons/ttasr.png')
+    golemSheet = loadImage('../images/enemy/golem.png')
+    lock = loadImage('../images/icons/lock.png')
+    levelImg = loadImage('../images/icons/levels.png')
+    planeImg = loadImage('../images/plane/ships_packed.png')
+    planeTiles = loadImage('../images/plane/tiles_packed.png')
+    heartRelic = loadImage('../images/relics/heartRelic.png')
+    backImg = loadImage('../images/buttons/back.png')
+    titleImg = loadImage('../images/title.png')
 }
 
 
