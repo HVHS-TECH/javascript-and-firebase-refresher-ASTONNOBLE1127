@@ -755,7 +755,7 @@ async function leaderload() {
 
 async function leaderBoard(path) {
     await localStorage.setItem("leaderpath",path)
-    pageDirect('./Leaderboard.html')
+    pageDirect('./leaderboard.html')
 }
 
 /***********************************************************/
@@ -943,10 +943,11 @@ async function leaveGame() {
     if (await fb_read(lobby+"/player1","/lobbies/") == userDetails.uid) {
         await fb_remove("/lobbies/"+lobby)
         await fb_remove("/users/"+userDetails.uid+"/lobby")
-        window.location.href = "./numbergame2.html"
+        pageChange("./numbergame2.html")
     } else {
         await fb_remove("/lobbies/"+lobby+"/player2")
         await fb_remove("/users/"+userDetails.uid+"/lobby")
-        window.location.href = "./numbergame2.html"
+        pageChange("./numbergame2.html")
     }
 }
+
