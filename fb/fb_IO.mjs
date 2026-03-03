@@ -951,3 +951,34 @@ async function leaveGame() {
     }
 }
 
+/***********************************************************/
+//fb_moniter_lobby()
+//
+//takes inputs and writes to the database
+//input
+//where, path
+//where2, path addon (if nessessary)
+//what, what its writing
+//
+//output,true
+/***********************************************************/
+
+function fb_moniter_lobby() {
+    onValue(ref(getDatabase(),"lobbies/"), (snapshot) => {
+
+        var fb_data = snapshot.val();
+
+        if (fb_data != null) {
+
+            if(document.URL.includes("chatroom.html")) {
+                fb_sortedRead_chat()
+            }
+
+        } else {
+
+           console.log("✅ Code for no record found goes here")
+
+        }
+
+    });
+}
