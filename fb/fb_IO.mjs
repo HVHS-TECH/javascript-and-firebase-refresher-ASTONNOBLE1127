@@ -105,6 +105,9 @@ if (document.getElementById("popbut")) {
     popbut1.addEventListener("click", accountButton);
     popbut.addEventListener("click", accountButton);
 }
+if (document.getElementById("gameSubmit")) {
+    document.getElementById("gameSubmit").addEventListener("click", guessNumber);
+}
 
 //if the dropdown is open and user clicks elsewhere closes dropdown
 window.onclick = function(event) {
@@ -863,7 +866,7 @@ async function lobbyGameLoad() {
     let userDetails = JSON.parse(localStorage.getItem("userDetails"));
     let lobby = await fb_read(userDetails.uid+"/lobby","/users/")
     console.log(lobby)
-    
+    fb_moniter_lobby()
 }
 
 /***********************************************************/
@@ -885,7 +888,9 @@ async function joinLobby(lobby) {
             await fb_write("","/lobbies/"+lobby+"/",temp)
             let temp2 = JSON.parse('{"lobby":"'+lobby+'"}')
             await fb_write("","/users/"+userDetails.uid+"/",temp2)
-            window.location.href = "./numbergameplay.html"
+            await fb_write("","/lobbies/"+lobby+"/",{"turn":1})
+            await fb_write("","/lobbies/"+lobby+"/",{"number":Math.floor(Math.random() * 100) + 1})
+            pageDirect("./numbergameplay.html")
         } else {
             alert("you cannot join your own lobby")
             console.log("you shouldn't even be seeing this if my code is working right")
@@ -943,11 +948,11 @@ async function leaveGame() {
     if (await fb_read(lobby+"/player1","/lobbies/") == userDetails.uid) {
         await fb_remove("/lobbies/"+lobby)
         await fb_remove("/users/"+userDetails.uid+"/lobby")
-        pageChange("./numbergame2.html")
+        pageDirect("./numberGame2.html")
     } else {
         await fb_remove("/lobbies/"+lobby+"/player2")
         await fb_remove("/users/"+userDetails.uid+"/lobby")
-        pageChange("./numbergame2.html")
+        pageDirect("./numberGame2.html")
     }
 }
 
@@ -963,15 +968,24 @@ async function leaveGame() {
 //output,true
 /***********************************************************/
 
-function fb_moniter_lobby() {
-    onValue(ref(getDatabase(),"lobbies/"), (snapshot) => {
+async function fb_moniter_lobby() {
+    var userDetails = JSON.parse(localStorage.getItem("userDetails"));
+    var lobby = await fb_read(userDetails.uid+"/lobby","/users/")
+    onValue(ref(getDatabase(),"lobbies/"+lobby+"/"), async (snapshot) => {
 
         var fb_data = snapshot.val();
 
         if (fb_data != null) {
 
-            if(document.URL.includes("chatroom.html")) {
-                fb_sortedRead_chat()
+            if(document.URL.includes("numbergameplay.html")) {
+                if (fb_data.player1 != null) {
+                    var p1username = await fb_read(fb_data.player1,"/uidVault/",)
+                    document.getElementById("player1").textContent = "player 1: " + p1username
+                }
+                if (fb_data.player2 != null) {
+                    var p2username = await fb_read(fb_data.player2,"/uidVault/",)
+                    document.getElementById("player2").textContent = "player 2: " + p2username
+                }
             }
 
         } else {
@@ -981,4 +995,38 @@ function fb_moniter_lobby() {
         }
 
     });
+}
+
+/***********************************************************/
+//guessNumber()
+//
+//makes a guess in the number game and updates firebase
+/***********************************************************/
+
+async function guessNumber() {
+    let input = document.getElementById("gameInput").value
+    if (isNaN(input) || input < 1 || input > 100) {
+        alert("guess must be a number between 1 and 100")
+    } else {
+        let userDetails = JSON.parse(localStorage.getItem("userDetails"));
+        let lobby = await fb_read(userDetails.uid+"/lobby","/users/")
+        let lobbyData = await fb_read("","/lobbies/"+lobby+"/")
+        if (lobbyData.player1 == userDetails.uid && lobbyData.player2 != null) {
+            if (lobbyData.turn == 1) {
+                let temp = JSON.parse('{"guess":'+input+'}')
+                await fb_write("","/lobbies/"+lobby+"/",temp)
+                await fb_write("","/lobbies/"+lobby+"/",{"turn":2})
+            } else {
+                alert("it's not your turn")
+            }
+        } else if (lobbyData.player2 == userDetails.uid) {
+            if (lobbyData.turn == 2) {
+                let temp = JSON.parse('{"guess":'+input+'}')
+                await fb_write("","/lobbies/"+lobby+"/",temp)
+                await fb_write("","/lobbies/"+lobby+"/",{"turn":1})
+            } else {
+                alert("it's not your turn")
+            }
+        }
+    }
 }
