@@ -865,8 +865,15 @@ async function lobbyLoad() {
 async function lobbyGameLoad() {
     let userDetails = JSON.parse(localStorage.getItem("userDetails"));
     let lobby = await fb_read(userDetails.uid+"/lobby","/users/")
-    console.log(lobby)
-    fb_moniter_lobby()
+    let supposedLobby = await fb_read(lobby+"/","/lobbies/")
+    if (supposedLobby != null) {
+        console.log(lobby)
+        fb_moniter_lobby()
+    } else {
+        fb_remove("/users/"+userDetails.uid+"/lobby")
+        alert("lobby not found, returning to lobby page")
+        pageDirect("./numberGame2.html")
+    }
 }
 
 /***********************************************************/
@@ -986,6 +993,22 @@ async function fb_moniter_lobby() {
                     var p2username = await fb_read(fb_data.player2,"/uidVault/",)
                     document.getElementById("player2").textContent = "player 2: " + p2username
                 }
+                if (fb_data.player1guess != null) {
+                    if (fb_data.player1guess == fb_data.number && fb_data.turn != 0) {
+                        appendGuess(fb_data.player1guess," is the correct guess! player 1 wins!")
+                        fb_write("","/lobbies/"+lobby+"/",{"turn":0})
+                    }
+                }
+                if (fb_data.player2guess != null) {
+                    if ((fb_data.player2guess == fb_data.number) && (fb_data.turn != 0)) {
+                        appendGuess(fb_data.player2guess," is the correct guess! player 2 wins!")
+                        fb_write("","/lobbies/"+lobby+"/",{"turn":0})
+                    }
+                }
+                if (fb_data.turn == 0) {
+                    document.getElementById("gameInput").disabled = true
+                    document.getElementById("gameSubmit").textContent = "game over"
+                }
             }
 
         } else {
@@ -1013,20 +1036,56 @@ async function guessNumber() {
         let lobbyData = await fb_read("","/lobbies/"+lobby+"/")
         if (lobbyData.player1 == userDetails.uid && lobbyData.player2 != null) {
             if (lobbyData.turn == 1) {
-                let temp = JSON.parse('{"guess":'+input+'}')
+                let temp = JSON.parse('{"player1guess":'+input+'}')
                 await fb_write("","/lobbies/"+lobby+"/",temp)
                 await fb_write("","/lobbies/"+lobby+"/",{"turn":2})
+                if (await fb_read("number","/lobbies/"+lobby+"/") == input) {
+                    alert("Correct guess!")
+                    appendGuess(input," is the correct guess! you win!")
+                } else if (await fb_read("number","/lobbies/"+lobby+"/") < input) {
+                    alert("guess is too high")
+                    appendGuess(input," is too high")
+                } else {
+                    alert("guess is too low")
+                    appendGuess(input," is too low")
+                }
             } else {
                 alert("it's not your turn")
             }
         } else if (lobbyData.player2 == userDetails.uid) {
             if (lobbyData.turn == 2) {
-                let temp = JSON.parse('{"guess":'+input+'}')
+                let temp = JSON.parse('{"player2guess":'+input+'}')
                 await fb_write("","/lobbies/"+lobby+"/",temp)
                 await fb_write("","/lobbies/"+lobby+"/",{"turn":1})
+                if (await fb_read("number","/lobbies/"+lobby+"/") == input) {
+                    alert("Correct guess!")
+                    appendGuess(input," is the correct guess! you win!")
+                } else if (await fb_read("number","/lobbies/"+lobby+"/") < input) {
+                    alert("guess is too high")
+                    appendGuess(input," is too high")
+                } else {
+                    alert("guess is too low")
+                    appendGuess(input," is too low")
+                }
             } else {
                 alert("it's not your turn")
             }
         }
     }
+}
+
+/***********************************************************/
+//appendGuess(guess)
+//
+//appends the guess to the screen
+//input
+//guess, the guess to append
+/***********************************************************/
+
+async function appendGuess(guess, winner) {
+    let guessLabel = document.createElement('label')
+    guessLabel.textContent = guess + winner
+    document.getElementById("guesses").appendChild(guessLabel)
+    let p = document.createElement('p')
+    document.getElementById("guesses").appendChild(p)
 }
